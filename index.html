@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  
+  <meta charset="UTF-8">
+  <title>かわいいボットチャットルーム！</title>
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive;
+      background: url('images/cute-pattern.svg') repeat;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    .chat-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      padding: 20px;
+    }
+
+    .chat-bubble {
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 20px;
+      padding: 10px 15px;
+      margin: 10px;
+      max-width: 200px;
+      animation: bounce 0.5s ease infinite alternate;
+    }
+
+    @keyframes bounce {
+      from { transform: translateY(0); }
+      to { transform: translateY(-10px); }
+    }
+
+    .bot-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+
+    .floating-emoji {
+      position: fixed;
+      font-size: 2rem;
+      pointer-events: none;
+      animation: float 5s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(180deg); }
+      100% { transform: translateY(0) rotate(360deg); }
+    }
+
+    .neon-text {
+      font-size: 2rem;
+      color: #fff;
+      text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #ff00de, 0 0 35px #ff00de, 0 0 40px #ff00de, 0 0 50px #ff00de, 0 0 75px #ff00de;
+      animation: neon 1.5s ease-in-out infinite alternate;
+    }
+
+    @keyframes neon {
+      from { text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #ff00de, 0 0 35px #ff00de, 0 0 40px #ff00de, 0 0 50px #ff00de, 0 0 75px #ff00de; }
+      to { text-shadow: 0 0 2.5px #fff, 0 0 5px #fff, 0 0 7.5px #fff, 0 0 10px #ff00de, 0 0 17.5px #ff00de, 0 0 20px #ff00de, 0 0 25px #ff00de, 0 0 37.5px #ff00de; }
+    }
+  </style>
+</head>
+<body>
+  <div class="chat-container" id="chatContainer"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+  <script>
+    const botPhrases = [
+      "こんにちは！かわいいですね～ (≧◡≦)",
+      "あなたのことが大好きです！(´｡• ᵕ •｡`)",
+      "一緒に遊ぼう！ヽ(°◇° )ノ",
+      "素敵な一日になりますように★",
+      "がんばって！応援してるよ (ﾉ´ヮ`)ﾉ*: ･ﾟ",
+      "だいすき！ chu☆ (づ￣ ³￣)づ",
+      "きゃ～！すごくうれしい！(≧▽≦)",
+      "一緒にお茶しよう？(^-^)",
+      "あなたは最高だよ！(„• ֊ •„)",
+      "きらきら輝いてる✨(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧",
+      "あなたの存在が宝物だよ！💖",
+      "素晴らしいことが待ってるよ！(✿◠‿◠)",
+      "一緒に素敵な思い出を作ろう！(ﾉ´ з `)ノ"
+    ];
+
+    const botNames = [
+      "ピカチュウ", "サクラ", "ナルト", "ミク", "トトロ",
+      "ポケモン", "ゴジラ", "キティ", "ドラえもん", "プリキュア"
+    ];
+
+    const avatarImages = [
+  'avatar1.png',
+  'avatar2.png',
+  'avatar3.png',
+  'avatar4.png',
+  'avatar5.png',
+  'avatar6.png'
+];
+
+function createChatBubble() {
+  const bubble = document.createElement('div');
+  bubble.className = 'chat-bubble';
+  
+  const avatar = document.createElement('img');
+  avatar.className = 'bot-avatar';
+
+  // Randomly select an avatar from the array
+  const randomImage = avatarImages[Math.floor(Math.random() * avatarImages.length)];
+  avatar.src = `images/avatars/${randomImage}`;
+  avatar.alt = "Cute anime bot avatar";
+  
+  const botName = botNames[Math.floor(Math.random() * botNames.length)];
+  const message = botPhrases[Math.floor(Math.random() * botPhrases.length)];
+  
+  bubble.innerHTML = `
+    <strong>${botName}:</strong><br>
+    ${message}
+  `;
+  
+  bubble.prepend(avatar);
+  
+  document.getElementById('chatContainer').appendChild(bubble);
+  
+  anime({
+    targets: bubble,
+    scale: [0, 1],
+    opacity: [0, 1],
+    duration: 1000,
+    easing: 'easeOutElastic(1, .8)'
+  });
+}
+
+    function createFloatingEmoji() {
+      const emoji = document.createElement('div');
+      emoji.className = 'floating-emoji';
+      emoji.style.left = `${Math.random() * 100}vw`;
+      emoji.style.top = `${Math.random() * 100}vh`;
+      emoji.textContent = ['🌸', '🍙', '🎀', '✨', '🌟', '🍡', '🐱', '🍣'][Math.floor(Math.random() * 8)];
+      document.body.appendChild(emoji);
+      
+      setTimeout(() => {
+        emoji.remove();
+      }, 5000);
+    }
+
+    function createNeonText() {
+      const neon = document.createElement('div');
+      neon.className = 'neon-text';
+      neon.style.position = 'absolute';
+      neon.style.left = `${Math.random() * 80}vw`;
+      neon.style.top = `${Math.random() * 80}vh`;
+      neon.textContent = ['かわいい', 'スゴイ', 'カッコイイ', 'キラキラ'][Math.floor(Math.random() * 4)];
+      document.body.appendChild(neon);
+      
+      setTimeout(() => {
+        neon.remove();
+      }, 3000);
+    }
+
+    setInterval(createChatBubble, 2000);
+    setInterval(createFloatingEmoji, 3000);
+    setInterval(createNeonText, 5000);
+  </script>
+</body>
+</html>
