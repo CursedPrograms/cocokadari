@@ -11,6 +11,8 @@
 
 # ここ☆デレデレ
 
+Host files for ここ☆デレデレ website. Visit the live website [here](https://cursedprograms.github.io/cocokadari/).
+
 <br>
 <div align="center">
 <a href="https://cursed-entertainment.itch.io/" target="_blank">
